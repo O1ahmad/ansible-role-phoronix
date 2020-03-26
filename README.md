@@ -1,12 +1,12 @@
 <p><img src="https://code.benco.io/icon-collection/logos/ansible.svg" alt="ansible logo" title="ansible" align="left" height="60" /></p>
-<p><img src="https://gdurl.com/LdkN" alt="pts logo" title="phoronix" align="right" height="80" /></p>
+<p><img src="https://i.imgur.com/mA5dAPk.png" alt="pts logo" title="phoronix" align="right" height="60" /></p>
 
 Ansible Role :bar_chart: :boom: Phoronix
 =========
 [![Galaxy Role](*role-shield-link*)](--role-link--)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/ansible-role-template?color=yellow)
 [![Downloads](*downloads-shield-link*)](--role-link--)
-[![Build Status](https://travis-ci.org/0x0I/ansible-role-template.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-template)
+[![Build Status](https://travis-ci.org/0x0I/ansible-role-phoronix.svg?branch=master)](https://travis-ci.org/0x0I/ansible-role-phoronix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
 **Table of Contents**
