@@ -1,0 +1,24 @@
+---
+- name: Create Phoronix group
+  become: true
+  group:
+    name: "{{ phoronix_user }}"
+    state: present
+    system: true
+  tags:
+    - install
+
+- name: Create Phoronix user
+  become: true
+  user:
+    comment: Phoronix service account
+    name: "{{ phoronix_user }}"
+    group: "{{ phoronix_user }}"
+    system: true
+  tags:
+    - install
+
+- name: Install Phoronix based on install type
+  include_tasks: "common/install/{{ install_type }}_install.yml"
+  tags:
+    - install

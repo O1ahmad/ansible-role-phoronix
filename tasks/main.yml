@@ -1,0 +1,16 @@
+---
+- name: Include common preflight tasks
+  include_tasks: "common/preflight.yml"
+  tags:
+    - preflight
+    - uninstall
+
+- name: Include common install tasks
+  include_tasks: "common/install.yml"
+  tags:
+    - install
+
+- name: Include common inspect tasks
+  include_tasks: "common/inspect.yml"
+  tags:
+    - inspect

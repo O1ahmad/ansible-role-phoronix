@@ -1,0 +1,19 @@
+---
+phoronix_user: phoronix
+
+system_dependencies:
+  - php
+  - php-xml
+
+install_type: package
+install_dir: /opt/phoronix
+
+package_name: phoronix-test-suite
+
+archive_url: https://github.com/phoronix-test-suite/phoronix-test-suite/releases/download/v9.4.1/phoronix-test-suite-9.4.1.tar.gz
+
+config_dir: "/home/{{ phoronix_user }}/.phoronix-test-suite"
+_phoronix_config_file: user-config.xml
+user_config: {}
+
+perform_uninstall: false
