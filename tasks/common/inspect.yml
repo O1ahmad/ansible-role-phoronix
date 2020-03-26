@@ -1,0 +1,4 @@
+---
+- name: Gather Phoronix system information
+  command: "{{ install_dir }}/phoronix-test-suite system-info"
+  register: pts_system_info
