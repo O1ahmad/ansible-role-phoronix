@@ -18,7 +18,7 @@ archive_url: https://github.com/phoronix-test-suite/phoronix-test-suite/releases
 
 ansi_removal_regex: '\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])'
 config_dir: "/home/{{ phoronix_user }}/.phoronix-test-suite"
-_phoronix_config_file: user-config.xml
+_phoronix_usercfg_file: user-config.xml
 user_config: {}
 
 perform_uninstall: false
