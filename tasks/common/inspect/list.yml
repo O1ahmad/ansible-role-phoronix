@@ -15,7 +15,7 @@
 - name: Sanitize PTS recommended test data
   when: run_recommended
   set_fact:
-    pts_recommeneded: "{{ pts_recommended + [item] if 'pts' in item else pts_recommended }}"
+    pts_recommended: "{{ pts_recommended + [item] if 'pts' in item else pts_recommended }}"
   loop: "{{ fmt_pts_recommended }}"
 
 # *** PTS Suite info ***

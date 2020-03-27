@@ -1,0 +1,24 @@
+---
+- name: Create config dir
+  become: true
+  file:
+    path: "{{ config_dir }}"
+    owner: "{{ phoronix_user }}"
+    group: "{{ phoronix_user }}"
+    state: directory
+  tags:
+    - config
+
+- name: Render Phoronix user configuration
+  become: true
+  template:
+    src: "{{ _phoronix_usercfg_file }}.j2"
+    dest: "{{ config_dir }}/{{ _phoronix_usercfg_file }}"
+    owner: "{{ phoronix_user }}"
+    group: "{{ phoronix_user }}"
+    mode: 0644
+  vars:
+    conf: "{{ user_config }}"
+  when: user_config is defined and user_config.keys()|length > 0
+  tags:
+    - config

@@ -1,0 +1,7 @@
+---
+- name: Execute recommended PTS tests
+  when: run_recommended
+  include_tasks: "common/launch/systemd-test.yml"
+  with_items: "{{ pts_recommended }}"
+  loop_control:
+    loop_var: test

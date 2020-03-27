@@ -1,10 +1,10 @@
-title "Ansible package installation test suite"
+title "Phoronix package installation test suite"
 
-describe file('/usr/bin/ansible') do
+describe file('/usr/bin/phoronix-test-suite') do
   it { should exist }
-  its('mode') { should cmp '0755' }
 end
 
-describe command('ansible --help') do
+describe command('phoronix-test-suite --help') do
   its('exit_status') { should eq 0 }
 end
+

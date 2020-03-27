@@ -10,8 +10,14 @@
     - always
 
 - name: Determine pts executable path
+  when: install_type|lower == "archive"
   set_fact:
     exe_path: "{{ install_dir }}/phoronix-test-suite"
+
+- name: Update executable path based on install type
+  when: install_type|lower == "package"
+  set_fact:
+    exe_path: "/usr/bin/phoronix-test-suite"
 
 - name: Check for uninstall signal
   block:

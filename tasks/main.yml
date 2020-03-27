@@ -11,11 +11,22 @@
     - install
 
 - name: Include common inspect tasks
-  include_tasks: "common/inspect.yml"
+  include_tasks: "common/inspect/inspect.yml"
   tags:
     - inspect
 
 - name: Include common list tasks
-  include_tasks: "common/list.yml"
+  include_tasks: "common/inspect/list.yml"
   tags:
+    - inspect
     - list
+
+- name: Include common config tasks
+  include_tasks: "common/config.yml"
+  tags:
+    - config
+
+- name: Include common launch tasks
+  include_tasks: "common/launch.yml"
+  tags:
+    - launch

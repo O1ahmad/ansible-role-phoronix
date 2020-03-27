@@ -1,0 +1,7 @@
+---
+- name: Execute test profiles based on launch type
+  include_tasks: "common/launch/{{ item }}.yml"
+  loop:
+    - 'benchmark'
+  tags:
+    - install

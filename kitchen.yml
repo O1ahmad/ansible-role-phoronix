@@ -23,9 +23,14 @@ transport:
 provisioner:
   hosts: test-kitchen
   name: ansible_playbook
+  require_pip: true
+  ansible_version: 2.9.4
+  ansible_verbose: true
+  ansible_cfg_path: test/ansible.cfg
+  requirements_path: test/requirements-test.yml
+  # idempotency_test: true
   require_chef_for_busser: false
   require_ruby_for_busser: false
-  ansible_verbose: true
 
 verifier:
   name: inspec
@@ -34,6 +39,9 @@ platforms:
   - name: centos-7
     driver_config:
       <<: *default_driver_config
+    provisioner:
+      require_pip: true
+      ansible_cfg_path: test/ansible-legacy.cfg
   - name: fedora-30
     driver_config:
       <<: *default_driver_config
@@ -43,7 +51,6 @@ platforms:
         - yum -y install python-pip
     provisioner:
       require_pip: true
-      ansible_cfg_path: test/ansible.cfg
   - name: fedora-31
     driver_config:
       <<: *default_driver_config
@@ -53,13 +60,14 @@ platforms:
         - yum -y install python-pip
     provisioner:
       require_pip: true
-      ansible_cfg_path: test/ansible.cfg
   - name: ubuntu-16.04
     driver_config:
       <<: *default_driver_config
       provision_command:
         - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
         - systemctl enable ssh.service
+    provisioner:
+      ansible_cfg_path: test/ansible-legacy.cfg
   - name: ubuntu-18.04
     driver_config:
       <<: *default_driver_config
@@ -77,12 +85,27 @@ suites:
   - name: archive_install
     provisioner:
       playbook: test/integration/install/archive_install/default_playbook.yml
+      ansible_extra_flags: '--skip-tags=inspect,config,launch'
     verifier:
       inspec_tests:
         - path: test/integration/install/archive_install
   - name: package_install
     provisioner:
       playbook: test/integration/install/package_install/default_playbook.yml
+      ansible_extra_flags: '--skip-tags=inspect,config,launch'
     verifier:
       inspec_tests:
         - path: test/integration/install/package_install
+  - name: user_config
+    provisioner:
+      playbook: test/integration/config/user_config/default_playbook.yml
+      ansible_extra_flags: '--skip-tags=inspect,launch'
+    verifier:
+      inspec_tests:
+        - path: test/integration/config/user_config
+  - name: launch_test
+    provisioner:
+      playbook: test/integration/launch/launch_test/default_playbook.yml
+    verifier:
+      inspec_tests:
+        - path: test/integration/launch/launch_test

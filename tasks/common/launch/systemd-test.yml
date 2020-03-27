@@ -1,0 +1,40 @@
+---
+- name: Reconcile test-run unit name
+  set_fact:
+    test_name: "{{ test | regex_replace('^pts/', 'pts-') }}"
+
+- name: Set test run unit configuration
+  set_fact:
+    _default_test_unit:
+      ExecStart: "{{ exe_path }} batch-benchmark {{ test }}"
+      User: "{{ phoronix_user }}"
+      Group: "{{ phoronix_user }}"
+      Environment: "PTS_SILENT_MODE=1 TEST_RESULTS_NAME={{ test_name }}-{{ ansible_hostname }} TEST_RESULTS_DESCRIPTION='0x01 test run'"
+      StandardOutput: journal
+      StandardError: inherit
+
+- name: Setup Test run systemd unit
+  include_role:
+    name: 0x0i.systemd
+  vars:
+    unit_config:
+      - name: "{{ test_name | regex_replace('^pts/') }}"
+        Unit:
+          Description: "Phoronix-Test-Suite | Test: {{ test_name }}"
+          Documentation: https://www.phoronix-test-suite.com/documentation/
+          Wants: network-online.target
+          After: network-online.target
+        Service: "{{ _default_test_unit }}"
+        Install:
+          WantedBy: multi-user.target
+  tags:
+    - launch
+
+- name: Start PTS test-run service
+  become: true
+  service:
+    name: "{{ test_name }}"
+    state: started
+    enabled: "yes"
+  tags:
+    - launch
