@@ -9,6 +9,10 @@
   tags:
     - always
 
+- name: Determine pts executable path
+  set_fact:
+    exe_path: "{{ install_dir }}/phoronix-test-suite"
+
 - name: Check for uninstall signal
   block:
     - name: Broadcast uninstall signal

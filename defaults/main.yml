@@ -10,8 +10,13 @@ install_dir: /opt/phoronix
 
 package_name: phoronix-test-suite
 
+inspect_system: true
+run_recommended: true
+run_available: false
+
 archive_url: https://github.com/phoronix-test-suite/phoronix-test-suite/releases/download/v9.4.1/phoronix-test-suite-9.4.1.tar.gz
 
+ansi_removal_regex: '\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])'
 config_dir: "/home/{{ phoronix_user }}/.phoronix-test-suite"
 _phoronix_config_file: user-config.xml
 user_config: {}
