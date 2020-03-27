@@ -12,4 +12,7 @@
             PromptForTestDescription: FALSE
             PromptSaveName: FALSE
             RunAllTestCombinations: TRUE
-        run_recommended: true
+        run_recommended: false
+        run_available: false
+        test_runs:
+          - pts/idle

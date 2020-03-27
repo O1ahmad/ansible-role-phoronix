@@ -8,9 +8,9 @@ services:
 
 env:
   - OS_VERSION=centos-7
+  - OS_VERSION=fedora-29
   - OS_VERSION=fedora-30
   - OS_VERSION=fedora-31
-  - OS_VERSION=ubuntu-1604
   - OS_VERSION=ubuntu-1804
   - OS_VERSION=ubuntu-1904
 
