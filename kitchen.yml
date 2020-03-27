@@ -42,6 +42,15 @@ platforms:
     provisioner:
       require_pip: true
       ansible_cfg_path: test/ansible-legacy.cfg
+  - name: fedora-29
+    driver_config:
+      <<: *default_driver_config
+      provision_command:
+        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
+        - systemctl enable sshd.service
+        - yum -y install python-pip
+    provisioner:
+      require_pip: true
   - name: fedora-30
     driver_config:
       <<: *default_driver_config
@@ -60,14 +69,6 @@ platforms:
         - yum -y install python-pip
     provisioner:
       require_pip: true
-  - name: ubuntu-16.04
-    driver_config:
-      <<: *default_driver_config
-      provision_command:
-        - sed -i 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
-        - systemctl enable ssh.service
-    provisioner:
-      ansible_cfg_path: test/ansible-legacy.cfg
   - name: ubuntu-18.04
     driver_config:
       <<: *default_driver_config

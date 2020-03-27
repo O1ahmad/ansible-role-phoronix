@@ -9,14 +9,14 @@
 - name: Format PTS recommended test data
   when: run_recommended
   set_fact:
-    fmt_pts_recommended: "{{ cmd_result.stdout_lines | map('trim') | map('regex_replace', ansi_removal_regex) | list }}"
-    pts_recommended: []
+    _fmt_recommended_tests: "{{ cmd_result.stdout_lines | map('trim') | map('regex_replace', ansi_removal_regex) | list }}"
+    _recommended_tests: []
 
 - name: Sanitize PTS recommended test data
   when: run_recommended
   set_fact:
-    pts_recommended: "{{ pts_recommended + [item] if 'pts' in item else pts_recommended }}"
-  loop: "{{ fmt_pts_recommended }}"
+    _recommended_tests: "{{ _recommended_tests + [item] if 'pts' in item else _recommended_tests }}"
+  loop: "{{ fmt_recommended_tests }}"
 
 # *** PTS Suite info ***
 
@@ -30,11 +30,11 @@
 - name: Format PTS available test suites
   when: run_available
   set_fact:
-    fmt_pts_suites: "{{ cmd_result.stdout_lines | map('trim') | map('regex_replace', ansi_removal_regex) | list }}"
-    pts_suites: []
+    _fmt_available_suites: "{{ cmd_result.stdout_lines | map('trim') | map('regex_replace', ansi_removal_regex) | list }}"
+    _available_suites: []
 
 - name: Sanitize PTS available suites data
   when: run_available
   set_fact:
-    pts_suites: "{{ pts_suites + [item] if 'pts' in item else pts_suites }}"
-  loop: "{{ fmt_pts_suites }}"
+    _available_suites: "{{ _available_suites + [item] if 'pts' in item else _available_suites }}"
+  loop: "{{ _fmt_available_suites }}"
