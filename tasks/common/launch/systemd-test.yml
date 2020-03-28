@@ -1,15 +1,29 @@
 ---
 - name: Reconcile test-run unit name
   set_fact:
-    test_name: "{{ test | regex_replace('^pts/', 'pts-') }}"
+    test_name: "{{ test.name | regex_replace('^pts/', 'pts-') }}"
+
+- name: Render Phoronix runtime environment configuration
+  become: true
+  when: test.runtime_config is defined and test.runtime_config.keys()|length > 0
+  template:
+    src: "{{ _phoronix_runtimecfg_file }}.j2"
+    dest: "{{ install_dir }}/{{ _phoronix_runtimecfg_file }}"
+    owner: "{{ phoronix_user }}"
+    group: "{{ phoronix_user }}"
+    mode: 0644
+  vars:
+    cfg: "{{ default_runtime_config | combine(item.runtime_config | default({})) }}"
+  tags:
+    - config
 
 - name: Set test run unit configuration
   set_fact:
     _default_test_unit:
-      ExecStart: "{{ exe_path }} batch-benchmark {{ test }}"
-      User: "{{ phoronix_user }}"
-      Group: "{{ phoronix_user }}"
-      Environment: "PTS_SILENT_MODE=1 TEST_RESULTS_NAME={{ test_name }}-{{ ansible_hostname }} TEST_RESULTS_DESCRIPTION='0x01 test run'"
+      ExecStart: "{{ exe_path }} batch-run {{ test.name }}"
+      ExecReload: "{{ exe_path }} finish-run {{ test.result_id | default('test-result-id') }}"
+      ExecStopPost: "{{ install_dir }}/test_post_exec.sh test-result"
+      EnvironmentFile: "{{ install_dir }}/{{ _phoronix_runtimecfg_file }}"
       StandardOutput: journal
       StandardError: inherit
 
@@ -18,13 +32,13 @@
     name: 0x0i.systemd
   vars:
     unit_config:
-      - name: "{{ test_name | regex_replace('^pts/') }}"
+      - name: "{{ test_name }}"
         Unit:
           Description: "Phoronix-Test-Suite | Test: {{ test_name }}"
           Documentation: https://www.phoronix-test-suite.com/documentation/
           Wants: network-online.target
           After: network-online.target
-        Service: "{{ _default_test_unit }}"
+        Service: "{{ _default_test_unit | combine(item.unit_properties | default({})) }}"
         Install:
           WantedBy: multi-user.target
   tags:

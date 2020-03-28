@@ -1,0 +1,14 @@
+---
+- name: Render Phoronix operational scripts
+  become: true
+  template:
+    src: "post_exec.sh.j2"
+    dest: "{{ install_dir }}/test_post_exec.sh"
+    owner: "{{ phoronix_user }}"
+    group: "{{ phoronix_user }}"
+    mode: 0755
+  vars:
+    exe: "{{ exe_path }}"
+    result_path: "{{ install_dir }}"
+  tags:
+    - config
