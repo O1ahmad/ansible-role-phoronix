@@ -10,18 +10,22 @@ describe service('pts-compress-gzip') do
   it { should be_enabled }
 end
 
-describe file('/etc/phoronix-test-suite.xml') do
+describe file('/usr/bin/wait_for_completion.sh') do
   it { should exist }
-  its('content') { should match('<Options>') }
+  its('mode') { should cmp '0755' }
+end
 
-  its('content') { should match('<BatchMode>') }
-  its('content') { should match('<SaveResults>True') }
-  its('content') { should match('<PromptForTestIdentifier>False') }
-  its('content') { should match('<PromptForTestDescription>False') }
-  its('content') { should match('<PromptSaveName>False') }
-  its('content') { should match('<RunAllTestCombinations>True') }
-  its('content') { should match('<Configured>True') }
-  its('content') { should match('</BatchMode>') }
+describe file('/opt/phoronix/test_post_exec.sh') do
+  it { should exist }
+  its('mode') { should cmp '0755' }
+end
 
-  its('content') { should match('</Options>') }
+describe file('/opt/phoronix/runtime/pts-encode-mp3/runtime.env') do
+  it { should exist }
+  its('mode') { should cmp '0644' }
+end
+
+describe file('/opt/phoronix/runtime/pts-compress-gzip/runtime.env') do
+  it { should exist }
+  its('mode') { should cmp '0644' }
 end
