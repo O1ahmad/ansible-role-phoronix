@@ -56,11 +56,18 @@
   tags:
     - launch
 
-- name: Start PTS test-run service
-  become: true
-  service:
-    name: "{{ test_name }}"
-    state: started
-    enabled: "yes"
+- name: Start and wait for completion of test
+  block:
+    - name: Start PTS test-run service
+      become: true
+      service:
+        name: "{{ test_name }}"
+        state: started
+        enabled: "yes"
+    - name: Wait for completion of test-run
+      become: true
+      when: synchronous_run
+      command:
+        cmd: "wait_for_completion.sh {{ test_name }}"
   tags:
     - launch

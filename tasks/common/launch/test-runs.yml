@@ -1,25 +1,25 @@
 ---
 - name: Batch install recommended tests
-  when: run_recommended
+  when: run_recommended_tests
   command: "{{ exe_path }} batch-install {{ item.name }}"
   loop: "{{ _recommended_tests }}"
   register: recommended_testrun_installs
 
 - name: Execute recommended PTS tests
-  when: run_recommended
+  when: run_recommended_tests
   include_tasks: "common/launch/systemd-test.yml"
   with_items: "{{ _recommended_tests }}"
   loop_control:
     loop_var: test
 
 - name: Batch install available suites
-  when: run_available
+  when: run_available_suites
   command: "{{ exe_path }} batch-install {{ item.name }}"
   loop: "{{ _available_suites }}"
   register: available_suite_installs
 
 - name: Execute available PTS suites
-  when: run_available
+  when: run_available_suites
   include_tasks: "common/launch/systemd-test.yml"
   with_items: "{{ _available_suites }}"
   loop_control:

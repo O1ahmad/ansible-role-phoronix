@@ -5,9 +5,8 @@
     - role: ansible-role-phoronix
       vars:
         install_type: archive
-        run_recommended: false
-        run_available: false
-        managed_configs: ['user-config', 'scripts']
+        managed_configs: ['user-config']
+        synchronous_run: false
         user_config:
           BatchMode:
             SaveResults: True

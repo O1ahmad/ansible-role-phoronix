@@ -14,8 +14,9 @@ package_name: phoronix-test-suite
 
 inspect_system: true
 
-run_recommended: true
-run_available: false
+run_recommended_tests: false
+run_available_suites: false
+synchronous_run: false
 
 test_runs: []
 
