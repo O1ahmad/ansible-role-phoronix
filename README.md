@@ -23,7 +23,7 @@ Ansible Role :bar_chart: :boom: Phoronix
   - [License](#license)
   - [Author Information](#author-information)
 
-Ansible role that installs and configures Phoronixi-Test-Suite (PTS): a comprehensive testing and benchmarking platform
+Ansible role that installs and configures Phoronixi-Test-Suite (PTS): a comprehensive & extensible testing and benchmarking platform for a range of hardware and associated machine subsystems.
 
 ##### Supported Platforms:
 ```
