@@ -9,9 +9,6 @@
     PTS_SILENT_MODE: 1
   register: cmd_result
 
-- debug:
-    var: user_config.keys()
-
 - name: Render Phoronix user configuration
   become: true
   when: user_config is defined and user_config.keys()|length > 0

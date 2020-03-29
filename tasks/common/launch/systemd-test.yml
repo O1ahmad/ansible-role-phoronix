@@ -1,19 +1,32 @@
 ---
-- name: Reconcile test-run unit name
+- name: Reconcile test-run unit name and runtime config
   set_fact:
     test_name: "{{ test.name | regex_replace('^pts/', 'pts-') }}"
 
+- name: Reconcile test-run default runtime config
+  set_fact:
+    default_runtime_config:
+      test_results_name: "{{ ansible_hostname }}-{{ test_name }}-result"
+      test_results_identifier: "{{ ansible_hostname }}-{{ test_name }}-id"
+      test_results_description: '"{{ test_name }} results for {{ ansible_hostname }}"'
+      pts_silent_mode: 1
+
+- name: Ensure existence of Phoronix test runtime config
+  file:
+    path: "{{ install_dir }}/runtime/{{ test_name }}"
+    state: directory
+    mode: '0755'
+
 - name: Render Phoronix runtime environment configuration
   become: true
-  when: test.runtime_config is defined and test.runtime_config.keys()|length > 0
   template:
     src: "{{ _phoronix_runtimecfg_file }}.j2"
-    dest: "{{ install_dir }}/{{ _phoronix_runtimecfg_file }}"
+    dest: "{{ install_dir }}/runtime/{{ test_name }}/{{ _phoronix_runtimecfg_file }}"
     owner: "{{ phoronix_user }}"
     group: "{{ phoronix_user }}"
     mode: 0644
   vars:
-    cfg: "{{ default_runtime_config | combine(item.runtime_config | default({})) }}"
+    cfg: "{{ default_runtime_config | combine(test.runtime_config | default({})) }}"
   tags:
     - config
 
@@ -21,9 +34,8 @@
   set_fact:
     _default_test_unit:
       ExecStart: "{{ exe_path }} batch-run {{ test.name }}"
-      ExecReload: "{{ exe_path }} finish-run {{ test.result_id | default('test-result-id') }}"
-      ExecStopPost: "{{ install_dir }}/test_post_exec.sh test-result"
-      EnvironmentFile: "{{ install_dir }}/{{ _phoronix_runtimecfg_file }}"
+      ExecReload: "{{ exe_path }} finish-run {{ test.runtime_config.test_results_name | default(default_runtime_config.test_results_name) }}"
+      EnvironmentFile: "{{ install_dir }}/runtime/{{ test_name }}/{{ _phoronix_runtimecfg_file }}"
       StandardOutput: journal
       StandardError: inherit
 
@@ -38,7 +50,7 @@
           Documentation: https://www.phoronix-test-suite.com/documentation/
           Wants: network-online.target
           After: network-online.target
-        Service: "{{ _default_test_unit | combine(item.unit_properties | default({})) }}"
+        Service: "{{ _default_test_unit | combine(test.unit_properties | default({})) }}"
         Install:
           WantedBy: multi-user.target
   tags:

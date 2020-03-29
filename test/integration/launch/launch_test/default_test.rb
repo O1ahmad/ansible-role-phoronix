@@ -5,6 +5,11 @@ describe service('pts-encode-mp3') do
   it { should be_enabled }
 end
 
+describe service('pts-compress-gzip') do
+  it { should be_installed }
+  it { should be_enabled }
+end
+
 describe file('/etc/phoronix-test-suite.xml') do
   it { should exist }
   its('content') { should match('<Options>') }

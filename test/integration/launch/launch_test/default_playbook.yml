@@ -8,8 +8,6 @@
         run_recommended: false
         run_available: false
         managed_configs: ['user-config', 'scripts']
-        default_runtime_config:
-          pts_silent_mode: 1
         user_config:
           BatchMode:
             SaveResults: True
@@ -20,7 +18,6 @@
             Configured: True
         test_runs:
           - name: pts/encode-mp3
-            runtime_config:
-              test_results_name: test-result
-              test_results_identifier: test-result-id
-              test_results_description: '"test result description"'
+          - name: pts/compress-gzip
+            unit_properties:
+              ExecStopPost: "/opt/phoronix/test_post_exec.sh gzip-results"
