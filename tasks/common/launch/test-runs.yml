@@ -1,4 +1,10 @@
 ---
+- name: Batch install designated tests
+  when: test_runs|length > 0
+  command: "{{ exe_path }} batch-install {{ item.name }}"
+  loop: "{{ test_runs }}"
+  register: test_run_installs
+
 - name: Execute recommended PTS tests
   when: run_recommended
   include_tasks: "common/launch/systemd-test.yml"

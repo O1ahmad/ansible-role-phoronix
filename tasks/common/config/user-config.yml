@@ -1,24 +1,27 @@
 ---
-- name: Create config dir
+- name: Execute initial batch(autonomous) testing setup
   become: true
-  file:
-    path: "{{ config_dir }}"
-    owner: "{{ phoronix_user }}"
-    group: "{{ phoronix_user }}"
-    state: directory
-  tags:
-    - config
+  when: test_runs|length > 0
+  shell:
+    cmd: "yes n | {{ exe_path }} batch-setup"
+    executable: "{{ shell_exe }}"
+  environment:
+    PTS_SILENT_MODE: 1
+  register: cmd_result
+
+- debug:
+    var: user_config.keys()
 
 - name: Render Phoronix user configuration
   become: true
+  when: user_config is defined and user_config.keys()|length > 0
   template:
     src: "{{ _phoronix_usercfg_file }}.j2"
-    dest: "{{ config_dir }}/{{ _phoronix_usercfg_file }}"
+    dest: "{{ _config_path }}"
     owner: "{{ phoronix_user }}"
     group: "{{ phoronix_user }}"
     mode: 0644
   vars:
     conf: "{{ user_config }}"
-  when: user_config is defined and user_config.keys()|length > 0
   tags:
     - config
