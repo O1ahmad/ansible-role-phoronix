@@ -15,8 +15,11 @@
 - name: Sanitize PTS recommended test data
   when: run_recommended
   set_fact:
-    _recommended_tests: "{{ _recommended_tests + [item] if 'pts' in item else _recommended_tests }}"
-  loop: "{{ fmt_recommended_tests }}"
+    _recommended_tests: "{{ _recommended_tests + [{'name': item}] if 'pts' in item else _recommended_tests }}"
+  loop: "{{ _fmt_recommended_tests }}"
+
+- debug:
+    var: _recommended_tests
 
 # *** PTS Suite info ***
 
@@ -36,5 +39,8 @@
 - name: Sanitize PTS available suites data
   when: run_available
   set_fact:
-    _available_suites: "{{ _available_suites + [item] if 'pts' in item else _available_suites }}"
+    _available_suites: "{{ _available_suites + [{'name': item}] if 'pts' in item else _available_suites }}"
   loop: "{{ _fmt_available_suites }}"
+
+- debug:
+    var: _available_suites
