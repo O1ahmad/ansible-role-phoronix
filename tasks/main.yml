@@ -15,12 +15,6 @@
   tags:
     - inspect
 
-- name: Include common list tasks
-  include_tasks: "common/inspect/list.yml"
-  tags:
-    - inspect
-    - list
-
 - name: Include common config tasks
   include_tasks: "common/config.yml"
   tags:

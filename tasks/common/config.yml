@@ -2,3 +2,6 @@
 - name: Generate designated configurations
   include_tasks: "common/config/{{ item }}.yml"
   with_items: "{{ managed_configs }}"
+
+- name: Render operational/configuration scripts
+  include_tasks: "common/config/scripts.yml"

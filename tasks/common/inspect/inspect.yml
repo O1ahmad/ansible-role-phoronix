@@ -35,3 +35,6 @@
   set_fact:
     _diagnostic_map: "{{ _diagnostic_map | combine({item.split('=')[0]: item.split('=')[1]|default('')}) }}"
   loop: "{{ _fmt_pts_diag }}"
+
+- name: Include PTS test listing inspection
+  include_tasks: "common/inspect/list.yml"
