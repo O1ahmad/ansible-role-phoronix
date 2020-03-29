@@ -1,9 +1,5 @@
 title "Phoronix archive installation test suite"
 
-describe directory('/home/phoronix/.phoronix-test-suite') do
-  it { should exist }
-end
-
 describe file('/etc/phoronix-test-suite.xml') do
   it { should exist }
   its('content') { should match('<Options>') }
