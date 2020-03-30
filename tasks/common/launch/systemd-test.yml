@@ -6,8 +6,8 @@
 - name: Reconcile test-run default runtime config
   set_fact:
     default_runtime_config:
-      test_results_name: "{{ ansible_hostname }}-{{ test_name }}-result"
-      test_results_identifier: "{{ ansible_hostname }}-{{ test_name }}-id"
+      test_results_name: "result-{{ test_name }}-{{ ansible_hostname }}"
+      test_results_identifier: "id-{{ test_name }}-{{ ansible_hostname }}"
       test_results_description: '"{{ test_name }} results for {{ ansible_hostname }}"'
       pts_silent_mode: 1
 
