@@ -1,0 +1,8 @@
+---
+shell_exe: /usr/bin/bash
+system_dependencies:
+  - epel-release
+  - php
+  - php-xml
+  - php-json
+  - make
