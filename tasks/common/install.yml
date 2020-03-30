@@ -18,6 +18,16 @@
   tags:
     - install
 
+- name: Create installation directory
+  become: true
+  file:
+    path: "{{ install_dir }}"
+    state: directory
+    owner: "{{ phoronix_user }}"
+    group: "{{ phoronix_user }}"
+  tags:
+    - install
+
 - name: Install Phoronix based on install type
   include_tasks: "common/install/{{ install_type }}_install.yml"
   tags:

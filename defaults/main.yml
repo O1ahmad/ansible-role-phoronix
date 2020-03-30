@@ -1,19 +1,20 @@
 ---
 phoronix_user: phoronix
 
+install_type: package
+install_dir: /opt/phoronix
+
+package_name: phoronix-test-suite
+
 system_dependencies:
   - php
   - php-xml
   - php-json
   - make
 
-install_type: package
-install_dir: /opt/phoronix
-
-package_name: phoronix-test-suite
-
 inspect_system: true
 
+shell_exe: /bin/bash
 run_recommended_tests: false
 run_available_suites: false
 synchronous_run: false

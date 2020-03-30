@@ -1,16 +1,4 @@
 ---
-- name: Create installation directory
-  become: true
-  file:
-    path: "{{ install_dir }}"
-    state: directory
-    owner: "{{ phoronix_user }}"
-    group: "{{ phoronix_user }}"
-  when: install_type == "archive"
-  tags:
-    - install
-    - archive
-
 - name: Download and extract Phoronix archive
   become: true
   unarchive:
