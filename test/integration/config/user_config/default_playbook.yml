@@ -5,11 +5,11 @@
     - role: ansible-role-phoronix
       vars:
         install_type: archive
-        managed_configs: ['user-config']
-        user_config:
-          BatchMode:
-            PromptForTestIdentifier: False
-          Installation:
-            RemoveDownloadFiles: True
-          OpenBenchmarking:
-            AnonymousUsageReporting: True
+        user_configs:
+          - config:
+              BatchMode:
+                PromptForTestIdentifier: False
+              Installation:
+                RemoveDownloadFiles: True
+              OpenBenchmarking:
+                AnonymousUsageReporting: True

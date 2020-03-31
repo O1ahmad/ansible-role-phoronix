@@ -5,18 +5,35 @@
     - role: ansible-role-phoronix
       vars:
         install_type: archive
-        managed_configs: ['user-config']
         synchronous_run: false
-        user_config:
-          BatchMode:
-            SaveResults: True
-            PromptForTestIdentifier: False
-            PromptForTestDescription: False
-            PromptSaveName: False
-            RunAllTestCombinations: True
-            Configured: True
-        test_runs:
-          - name: pts/encode-mp3
-          - name: pts/compress-gzip
-            unit_properties:
-              ExecStopPost: "/opt/phoronix/test_post_exec.sh gzip-results"
+        default_autopilot: true
+        user_configs:
+          - run_recommended_tests: false
+            run_available_suites: false
+            config:
+              BatchMode:
+                SaveResults: True
+                PromptForTestIdentifier: False
+                PromptForTestDescription: False
+                PromptSaveName: False
+                RunAllTestCombinations: True
+                Configured: True
+            test_runs:
+              - name: pts/compress-gzip
+                unit_properties:
+                  ExecStopPost: "/usr/bin/test_post_exec.sh gzip-results"
+          - user: kitchen
+            config:
+              BatchMode:
+                SaveResults: True
+                PromptForTestIdentifier: False
+                PromptForTestDescription: False
+                PromptSaveName: False
+                RunAllTestCombinations: True
+                Configured: True
+            test_runs:
+              - name: pts/encode-mp3
+          - user: kitchen
+            test_runs:
+              - name: pts/apache
+                autopilot: false
