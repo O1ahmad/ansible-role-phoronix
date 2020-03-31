@@ -10,11 +10,6 @@
   tags:
     - install
 
-- name: Include common inspect tasks
-  include_tasks: "common/inspect/inspect.yml"
-  tags:
-    - inspect
-
 - name: Include common config tasks
   include_tasks: "common/config.yml"
   tags:

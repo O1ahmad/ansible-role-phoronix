@@ -1,37 +1,44 @@
 ---
+- name: Resolve test-run suite of tests to execute
+  set_fact:
+    _run_recommended_tests: "{{ run_cfg.run_recommended_tests if run_cfg.run_recommended_tests is defined else false }}"
+    _run_available_suites: "{{ run_cfg.run_available_suites if run_cfg.run_available_suites is defined else false }}"
+    _test_runs: "{{ run_cfg.test_runs if run_cfg.test_runs is defined else [] }}"
+    _test_user: "{{ run_cfg.user if run_cfg.user is defined else 'auto' }}"
+
 - name: Batch install recommended tests
-  when: run_recommended_tests
+  when: _run_recommended_tests
   command: "{{ exe_path }} batch-install {{ _recommended_tests | map(attribute='name') | join(' ') }}"
   register: recommended_testrun_installs
 
 - name: Execute recommended PTS tests
-  when: run_recommended_tests
+  when: _run_recommended_tests
   include_tasks: "common/launch/systemd-test.yml"
   with_items: "{{ _recommended_tests }}"
   loop_control:
     loop_var: test
 
 - name: Batch install available suites
-  when: run_available_suites
+  when: _run_available_suites
   command: "{{ exe_path }} batch-install {{ _available_suites | map(attribute='name') | join(' ') }}"
   register: available_suite_installs
 
 - name: Execute available PTS suites
-  when: run_available_suites
+  when: _run_available_suites
   include_tasks: "common/launch/systemd-test.yml"
   with_items: "{{ _available_suites }}"
   loop_control:
     loop_var: test
 
 - name: Batch install designated tests
-  when: test_runs|length > 0
-  command: "{{ exe_path }} batch-install {{ test_runs | map(attribute='name') | join(' ') }}"
+  when: _test_runs|length > 0
+  command: "{{ exe_path }} batch-install {{ _test_runs | map(attribute='name') | join(' ') }}"
   register: _test_run_installs
 
 - name: Execute designated PTS test runs
-  when: test_runs|length > 0
+  when: _test_runs|length > 0
   include_tasks: "common/launch/systemd-test.yml"
-  with_items: "{{ test_runs }}"
+  with_items: "{{ _test_runs }}"
   register: designated_test_runs
   loop_control:
     loop_var: test

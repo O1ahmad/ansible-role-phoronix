@@ -32,3 +32,9 @@
   include_tasks: "common/install/{{ install_type }}_install.yml"
   tags:
     - install
+
+- name: Include PTS system inspection tasks
+  include_tasks: "common/preflight/inspect.yml"
+
+- name: Include PTS test suites inspection tasks
+  include_tasks: "common/preflight/test-list.yml"

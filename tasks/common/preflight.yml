@@ -1,7 +1,4 @@
 ---
-- debug:
-    var: ansible_distribution
-
 - name: Include OS and distribution specific variables.
   include_vars: "{{ item }}"
   with_first_found:
@@ -22,15 +19,15 @@
     exe_path: "/usr/bin/phoronix-test-suite"
 
 - name: Check for uninstall signal
+  when: perform_uninstall
   block:
     - name: Broadcast uninstall signal
+      when: perform_uninstall
       command: /bin/true
       notify: Uninstall service
-      when: perform_uninstall
 
     - name: End play following uninstallation
       meta: end_play
-  when: perform_uninstall
   ignore_errors: true
 
 - name: Update system dependencies

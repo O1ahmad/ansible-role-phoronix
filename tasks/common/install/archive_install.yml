@@ -1,6 +1,7 @@
 ---
 - name: Download and extract Phoronix archive
   become: true
+  when: install_type == "archive"
   unarchive:
     src: "{{ archive_url }}"
     dest: "{{ install_dir }}"
@@ -11,7 +12,6 @@
       - --strip-components
       - '1'
     remote_src: true
-  when: install_type == "archive"
   tags:
     - install
     - archive
