@@ -1,33 +1,38 @@
 ---
-- name: Reconcile runtime test-run specifications - Step #1
+- name: Reconcile runtime test-run specifications - Step 1
   set_fact:
     _default_runtime_dir: "{{ install_dir }}/runtime"
-    
+
     _test_name: "{{ test.name | regex_replace('^pts/', 'pts-') }}"
     _test_unit_path: "{{ cfg.test_unit_path | default('/etc/systemd/system') }}"
-    
+
     _autopilot: "{{ test.autopilot | default(default_autopilot) }}"
     _run_asynchronous: "{{ test.run_asynchronous | default(default_run_asynchronous) }}"
-    
+
     _id_base: "{{ ansible_form_factor }}-{{ ansible_architecture }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}"
   tags:
     - launch
 
-- name: Reconcile runtime test-run specifications - Step #2
+- name: Reconcile runtime test-run specifications - Step 2
   set_fact:
-     _runtime_dir: "{{ '/home/'+_test_user+'/.phoronix-test-suite/runtime' if _test_user != 'auto' else _default_runtime_dir }}"
-     
-     test_results_name: "{{ cfg.prefix | default('0xO1') }}-{{ _test_name }}-{{ ansible_hostname }}"
-     test_results_description: '"{{ _test_name }} results for {{ ansible_hostname }}"'
+    _runtime_dir: "{{ '/home/'+_test_user+'/.phoronix-test-suite/runtime' if _test_user != 'auto' else _default_runtime_dir }}"
     _default_test_id: "{{ _id_base }}-{{ _test_name }}-{{ ansible_hostname }}-{{ ansible_date_time.epoch }}"
   tags:
     - launch
 
-- name: Reconcile test-run default runtime configuration
+- name: Reconcile test-run (default) runtime configuration
   set_fact:
     _default_runtime_config:
+      test_results_name: "{{ cfg.prefix | default('0xO1') }}-{{ _test_name }}-{{ ansible_hostname }}"
+      test_results_description: '"{{ _test_name }} results for {{ ansible_hostname }}"'
       test_results_identifier: "{{ cfg.id | default(_default_test_id) }}"
       pts_silent_mode: 1
+  tags:
+    - launch
+
+- name: Reconcile test-run *runtime* configuration
+  set_fact:
+    _runtime_config: "{{ _default_runtime_config | combine(test.runtime_config | default({})) }}"
   tags:
     - launch
 
@@ -49,7 +54,7 @@
     group: "{{ phoronix_user }}"
     mode: 0644
   vars:
-    cfg: "{{ _default_runtime_config | combine(test.runtime_config | default({})) }}"
+    cfg: "{{ _runtime_config }}"
   tags:
     - launch
     - config
@@ -59,7 +64,7 @@
   set_fact:
     _default_test_unit:
       ExecStart: "{{ exe_path }} batch-run {{ test.name }}"
-      ExecReload: "{{ exe_path }} finish-run {{ test.runtime_config.test_results_name | default(_default_runtime_config.test_results_name) }}"
+      ExecReload: "{{ exe_path }} finish-run {{ _runtime_config.test_results_name | default(_default_runtime_config.test_results_name) }}"
       EnvironmentFile: "{{ _runtime_dir }}/{{ _test_name }}.env"
       StandardOutput: journal
       StandardError: inherit
