@@ -31,7 +31,7 @@
     - preflight
     - inspect
 
-# Format PTS collected data
+# Format PTS collected data - remove ANSI cli-encodings and trim whitespace
 - name: Format PTS system and diagnostic data
   when: inspect_system
   set_fact:
