@@ -1,4 +1,4 @@
-title "Phoronix archive installation test suite"
+title "Phoronix test-run launch test suite"
 
 describe file('/usr/bin/wait_for_completion.sh') do
   it { should exist }

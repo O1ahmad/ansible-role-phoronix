@@ -5,6 +5,7 @@
     _test_unit_path: "{{ cfg.test_unit_path | default('/etc/systemd/system') }}"
     _autopilot: "{{ test.autopilot | default(default_autopilot) }}"
     _id_base: "{{ ansible_form_factor }}-{{ ansible_architecture }}-{{ ansible_distribution }}-{{ ansible_distribution_version }}"
+    _run_asynchronous: "{{ test.run_asynchronous | default(default_run_asynchronous) }}"
   tags:
     - launch
 
@@ -91,7 +92,7 @@
         enabled: "yes"
     - name: Wait for completion of test-run
       become: true
-      when: synchronous_run
+      when: not _run_asynchronous
       command:
         cmd: "wait_for_completion.sh {{ _test_name }}"
   tags:

@@ -38,3 +38,18 @@
 
 - name: Include PTS test suites inspection tasks
   include_tasks: "common/preflight/test-list.yml"
+
+- name: Check for uninstall signal
+  when: perform_uninstall
+  block:
+    - name: Initialize uninstallation tests list
+      set_fact:
+        _uninstall_tests: []
+
+    - name: Broadcast uninstall signal
+      command: /bin/true
+      notify: Uninstall service
+
+    - name: End play following uninstallation
+      meta: end_play
+  ignore_errors: true

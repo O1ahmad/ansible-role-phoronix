@@ -1,4 +1,4 @@
-title "Phoronix archive installation test suite"
+title "Phoronix user configuration test suite"
 
 describe file('/etc/phoronix-test-suite.xml') do
   it { should exist }
