@@ -1,6 +1,7 @@
 ---
-- name: Reconcile test-run unit name and runtime config
+- name: Reconcile runtime test-run specifications - Step #1
   set_fact:
+    _default_runtime_dir: "{{ install_dir }}/runtime"
     _test_name: "{{ test.name | regex_replace('^pts/', 'pts-') }}"
     _test_unit_path: "{{ cfg.test_unit_path | default('/etc/systemd/system') }}"
     _autopilot: "{{ test.autopilot | default(default_autopilot) }}"
@@ -9,25 +10,24 @@
   tags:
     - launch
 
-- name: Reconcile test-run runtime configs
+- name: Reconcile runtime test-run specifications - Step #2
   set_fact:
-    _default_runtime_dir: "{{ install_dir }}/runtime"
+     test_results_name: "{{ cfg.prefix | default('0xO1') }}-{{ _test_name }}-{{ ansible_hostname }}"
     _default_test_id: "{{ _id_base }}-{{ _test_name }}-{{ ansible_hostname }}-{{ ansible_date_time.epoch }}"
+    test_results_description: '"{{ _test_name }} results for {{ ansible_hostname }}"'
+    _runtime_dir: "{{ '/home/'+_test_user+'/.phoronix-test-suite/runtime' if _test_user != 'auto' else _default_runtime_dir }}"
   tags:
     - launch
 
-- name: Reconcile test-run default runtime config
+- name: Reconcile test-run default runtime configuration
   set_fact:
-    _runtime_dir: "{{ '/home/'+_test_user+'/.phoronix-test-suite/runtime' if _test_user != 'auto' else _default_runtime_dir }}"
     _default_runtime_config:
-      test_results_name: "{{ cfg.prefix | default('0xO1') }}-{{ _test_name }}-{{ ansible_hostname }}"
       test_results_identifier: "{{ cfg.id | default(_default_test_id) }}"
-      test_results_description: '"{{ _test_name }} results for {{ ansible_hostname }}"'
       pts_silent_mode: 1
   tags:
     - launch
 
-- name: Ensure existence of Phoronix test runtime config
+- name: Ensure existence of Phoronix test runtime config dir
   become: true
   file:
     path: "{{ _runtime_dir }}"
