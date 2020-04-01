@@ -16,9 +16,7 @@ system_dependencies:
 inspect_system: true
 
 shell_exe: /bin/bash
-run_recommended_tests: false
-run_available_suites: false
-synchronous_run: false
+default_run_asynchronous: false
 
 default_autopilot: false
 ansi_removal_regex: '\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])'

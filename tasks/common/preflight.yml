@@ -18,18 +18,6 @@
   set_fact:
     exe_path: "/usr/bin/phoronix-test-suite"
 
-- name: Check for uninstall signal
-  when: perform_uninstall
-  block:
-    - name: Broadcast uninstall signal
-      when: perform_uninstall
-      command: /bin/true
-      notify: Uninstall service
-
-    - name: End play following uninstallation
-      meta: end_play
-  ignore_errors: true
-
 - name: Update system dependencies
   become: true
   package:

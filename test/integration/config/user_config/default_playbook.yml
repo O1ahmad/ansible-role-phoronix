@@ -8,8 +8,8 @@
         user_configs:
           - config:
               BatchMode:
-                PromptForTestIdentifier: False
+                PromptForTestIdentifier: false
               Installation:
-                RemoveDownloadFiles: True
+                RemoveDownloadFiles: true
               OpenBenchmarking:
-                AnonymousUsageReporting: True
+                AnonymousUsageReporting: true

@@ -1,10 +1,10 @@
 ---
 - name: Resolve test-run suite of tests to execute
   set_fact:
-    _run_recommended_tests: "{{ run_cfg.run_recommended_tests if run_cfg.run_recommended_tests is defined else false }}"
-    _run_available_suites: "{{ run_cfg.run_available_suites if run_cfg.run_available_suites is defined else false }}"
-    _test_runs: "{{ run_cfg.test_runs if run_cfg.test_runs is defined else [] }}"
-    _test_user: "{{ run_cfg.user if run_cfg.user is defined else 'auto' }}"
+    _run_recommended_tests: "{{ run_cfg.run_recommended_tests | default(false) }}"
+    _run_available_suites: "{{ run_cfg.run_available_suites | default(false) }}"
+    _test_runs: "{{ run_cfg.test_runs | default([]) }}"
+    _test_user: "{{ run_cfg.user | default('auto') }}"
 
 - name: Batch install recommended tests
   when: _run_recommended_tests
