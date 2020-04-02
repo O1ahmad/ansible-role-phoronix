@@ -28,7 +28,7 @@
 # *** PTS Suite info ***
 - name: Gather available Phoronix test suites
   shell:
-    cmd: "set -o pipefail {{ exe_path }} list-available-suites | awk '{print $1}'"
+    cmd: "{{ exe_path }} list-available-suites | awk '{print $1}'"
     executable: "{{ shell_exe }}"
   register: cmd_result
   changed_when: false
