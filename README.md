@@ -94,7 +94,7 @@ _The following variable(s) can be customized to manage this uninstall process:_
 Dependencies
 ------------
 
-...*list dependencies*...
+0x0i.systemd
 
 Example Playbook
 ----------------
