@@ -13,6 +13,7 @@
   become: true
   when: _cfg_user == 'auto'
   shell:
+    # auto-deny all options provided by setup (desired config will override)
     cmd: "yes n | {{ exe_path }} batch-setup"
     executable: "{{ shell_exe }}"
   environment:
@@ -20,6 +21,7 @@
   register: cmd_result
 
 - name: Create user configuration directory
+  become: true
   when: _cfg_user != 'auto'
   file:
     path: "{{ _config_path|dirname }}"
