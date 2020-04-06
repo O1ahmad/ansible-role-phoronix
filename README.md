@@ -27,7 +27,6 @@ Ansible role that installs and configures Phoronixi-Test-Suite (PTS): a comprehe
 
 ##### Supported Platforms:
 ```
-* Debian
 * Redhat(CentOS/Fedora)
 * Ubuntu
 ```
@@ -47,7 +46,30 @@ Variables are available and organized according to the following software & mach
 
 #### Install
 
-...*description of installation related vars*...
+`install_type: <package | archive>` (**default**: archive)
+- **package**: supported by Debian and Redhat distributions, package installation of *PTS* pulls the specified package from the respective package management repository.
+
+`package_name: <package-name-and-version>` (**default**: *phoronix-test-suite*[-latest])
+- name and version of the *phoronix-test-suite* package to download and install. [Reference](http://fr2.rpmfind.net/linux/rpm2html/search.php?query=phoronix&submit=Search+...&system=&arch=) or run something like `dnf --showduplicates list phoronix-test-suite` in a terminal to display a list of available packages for your platform.
+
+  - Note that the installation directory is determined by the package management system and currently defaults to under `/usr/bin` for all distros.
+
+- **archive**: compatible with both **tar and zip** formats, archived installation binaries can be obtained from local and remote compressed archives either from the official [releases index](https://github.com/phoronix-test-suite/phoronix-test-suite/releases) or those generated from development/custom sources.
+
+`install_dir: </path/to/installation/dir>` (**default**: `/opt/phoronix`)
+- path on target host where the `PTS` binaries should be extracted to. *ONLY* relevant when `install_type` is set to **archive**
+
+`archive_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
+- address of a compressed **tar or zip** archive containing `ansible` binaries. This method technically supports installation of any available version of `phoronix-test-suite`. Links to official versions can be found [here](https://github.com/phoronix-test-suite/phoronix-test-suite/releases). *ONLY* relevant when `install_type` is set to **archive**
+
+`inspect_system: <true | false>` (**default**: true)
+- load *PTS* gathered system information about the target host during a play. Information consists of *general system details and diagnostic info, attached sensor capabilities and networking configuration*.
+
+`default_run_asynchronous: <true | false>` (**default**: false)
+-whether to run configured tests asynchronously and in parallel on a particular host **by default** or execute synchronously waiting for each test to finish prior to starting the next. Otherwise, defer to run preference.
+
+`default_autopilot: <true | false>` (**default**: false)
+- automatically execute a test/benchmarking run, from installation to results reporting, without manual intervention using provided operator configurations **by default**. Otherwise, defer to run preference.
 
 #### Config
 
@@ -55,11 +77,19 @@ Variables are available and organized according to the following software & mach
 
 #### Launch
 
-...*description of service launch related vars*...
+Execution of each `phoronix-test-suite` test or test-suite is accomplished utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool.
+.
+.
+.
 
 #### Uninstall
 
-...*description of uninstallation related vars*...
+Support for uninstalling and removing artifacts necessary for provisioning allows for users/operators to return a target host to its configured state prior to application of this role. This can be useful for recycling nodes and roles and perhaps providing more graceful/managed transitions between tooling upgrades.
+
+_The following variable(s) can be customized to manage this uninstall process:_
+
+`perform_uninstall: <true | false>` (**default**: `false`)
+- whether to uninstall and remove all artifacts and remnants of this `phoronix-test-suite` installation on a target host (**see**: `handlers/main.yml` for details)
 
 Dependencies
 ------------
