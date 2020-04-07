@@ -1,6 +1,6 @@
 ---
-shell_exe: /usr/bin/bash
-system_dependencies:
+_shell_exe: /usr/bin/bash
+_system_dependencies:
   - epel-release
   - php
   - php-xml
