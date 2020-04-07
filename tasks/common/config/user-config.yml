@@ -15,7 +15,7 @@
   shell:
     # auto-deny all options provided by setup (desired config will override)
     cmd: "yes n | {{ exe_path }} batch-setup"
-    executable: "{{ shell_exe }}"
+    executable: "{{ _shell_exe }}"
   environment:
     PTS_SILENT_MODE: 1
   register: cmd_result

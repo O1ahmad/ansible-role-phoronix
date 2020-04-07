@@ -35,10 +35,10 @@
 - name: Format PTS system and diagnostic data
   when: inspect_system
   set_fact:
-    _fmt_pts_info: "{{ _pts_system_info.stdout_lines | map('trim') | select | map('regex_replace', ansi_removal_regex) | list }}"
-    _fmt_pts_diag: "{{ _pts_diagnostics.stdout_lines | map('trim') | select | map('regex_replace', ansi_removal_regex) | list }}"
-    _fmt_pts_sensors: "{{ _pts_sensors.stdout_lines | map('trim') | select | map('regex_replace', ansi_removal_regex) | list }}"
-    _fmt_pts_netinfo: "{{ _pts_netinfo.stdout_lines | map('trim') | select | map('regex_replace', ansi_removal_regex) | list }}"
+    _fmt_pts_info: "{{ _pts_system_info.stdout_lines | map('trim') | select | map('regex_replace', _ansi_removal_regex) | list }}"
+    _fmt_pts_diag: "{{ _pts_diagnostics.stdout_lines | map('trim') | select | map('regex_replace', _ansi_removal_regex) | list }}"
+    _fmt_pts_sensors: "{{ _pts_sensors.stdout_lines | map('trim') | select | map('regex_replace', _ansi_removal_regex) | list }}"
+    _fmt_pts_netinfo: "{{ _pts_netinfo.stdout_lines | map('trim') | select | map('regex_replace', _ansi_removal_regex) | list }}"
     _diagnostic_map: {}
   tags:
     - preflight
