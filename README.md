@@ -62,14 +62,8 @@ Variables are available and organized according to the following software & mach
 `archive_url: <path-or-url-to-archive>` (**default**: see `defaults/main.yml`)
 - address of a compressed **tar or zip** archive containing `ansible` binaries. This method technically supports installation of any available version of `phoronix-test-suite`. Links to official versions can be found [here](https://github.com/phoronix-test-suite/phoronix-test-suite/releases). *ONLY* relevant when `install_type` is set to **archive**
 
-`inspect_system: <true | false>` (**default**: true)
-- load *PTS* gathered system information about the target host during a play. Information consists of *general system details and diagnostic info, attached sensor capabilities and networking configuration*.
-
-`default_run_asynchronous: <true | false>` (**default**: false)
--whether to run configured tests asynchronously and in parallel on a particular host **by default** or execute synchronously waiting for each test to finish prior to starting the next. Otherwise, defer to run preference.
-
-`default_autopilot: <true | false>` (**default**: false)
-- automatically execute a test/benchmarking run, from installation to results reporting, without manual intervention using provided operator configurations **by default**. Otherwise, defer to run preference.
+`inspect_system: <true | false>` (**default**: *true*)
+- load *PTS* gathered system information about the target host. Information consists of *general system details and diagnostic info, attached sensor capabilities and networking configuration*.
 
 #### Config
 
@@ -77,10 +71,13 @@ Variables are available and organized according to the following software & mach
 
 #### Launch
 
-Execution of each `phoronix-test-suite` test or test-suite is accomplished utilizing the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool.
-.
-.
-.
+When in `autopilot`, execution of each `phoronix-test-suite` test or test-suite is accomplished using the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool. 
+
+`default_run_asynchronous: <true | false>` (**default**: *false*)
+- whether to run configured tests asynchronously and in parallel on a particular host **by default** or execute synchronously waiting for each test to finish prior to starting the next. *Otherwise, defer to run preference.*
+
+`default_autopilot: <true | false>` (**default**: *false*)
+- automatically execute a test/benchmarking run, from installation to results reporting, without manual intervention using provided operator configurations **by default**. *Otherwise, defer to run preference.*
 
 #### Uninstall
 
