@@ -77,7 +77,7 @@ When in `autopilot`, execution of each `phoronix-test-suite` test or test-suite 
 - whether to run configured tests asynchronously and in parallel on a particular host **by default** or execute synchronously waiting for each test to finish prior to starting the next. *Otherwise, defer to run preference.*
 
 `default_autopilot: <true | false>` (**default**: *false*)
-- automatically execute a test/benchmarking run, from installation to results reporting, without manual intervention using provided operator configurations **by default**. *Otherwise, defer to run preference.*
+- automatically execute a test/benchmarking run, from installation to results reporting, using provided operator configurations **by default**. *Otherwise, defer to run preference.*
 
 #### Uninstall
 
