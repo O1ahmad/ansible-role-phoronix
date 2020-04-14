@@ -86,7 +86,7 @@ The following variables can be adjusted to manage these execution policies.
 `default_autopilot: <true | false>` (**default**: *false*)
 - automatically execute a test/benchmarking run, from installation to results reporting, using provided operator configurations **by default**. *Otherwise, defer to run preference.*
 
-`[user_configs: <config-entry>: test_runs: <test-entry>:] custom_unit_properties: <hash>` (**default**: `{}`)
+`[user_configs: <config-entry>: test_runs: <test-entry>:] unit_properties: <hash>` (**default**: `{}`)
 - hash of settings used to customize the `[Service]` unit configuration and execution environment of the `test run` **systemd** service.
 
 ###### Example
