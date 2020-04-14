@@ -34,7 +34,7 @@ Ansible role that installs and configures Phoronixi-Test-Suite (PTS): a comprehe
 Requirements
 ------------
 
-None
+Requires the `unzip/gtar` utility to be installed on the target host. See ansible `unarchive` module [notes](https://docs.ansible.com/ansible/latest/modules/unarchive_module.html#notes) for details.
 
 Role Variables
 --------------
@@ -45,6 +45,8 @@ Variables are available and organized according to the following software & mach
 * _uninstall_
 
 #### Install
+
+_The following variables can be customized to control various aspects of this installation process, ranging from the package version or archive to download and install to the collection of system information and capabilites of targeted hosts:_
 
 `install_type: <package | archive>` (**default**: archive)
 - **package**: supported by Debian and Redhat distributions, package installation of *PTS* pulls the specified package from the respective package management repository.
@@ -63,7 +65,10 @@ Variables are available and organized according to the following software & mach
 - address of a compressed **tar or zip** archive containing `ansible` binaries. This method technically supports installation of any available version of `phoronix-test-suite`. Links to official versions can be found [here](https://github.com/phoronix-test-suite/phoronix-test-suite/releases). *ONLY* relevant when `install_type` is set to **archive**
 
 `inspect_system: <true | false>` (**default**: *true*)
-- load *PTS* gathered system information about the target host. Information consists of *general system details and diagnostic info, attached sensor capabilities and networking configuration*.
+* load *PTS* gathered system information about the target host. Information consists of:
+  * general system details and diagnostic info
+  * attached sensor capabilities
+  * networking configuration
 
 #### Config
 
@@ -71,7 +76,7 @@ Variables are available and organized according to the following software & mach
 
 #### Launch
 
-When in `autopilot`, execution of each `phoronix-test-suite` test or test-suite is accomplished using the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool. 
+When operating in `autopilot` mode **ONLY**, execution of *PTS* test suites and individual or groups of tests runs is accomplished using the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool. Launched as background processes or daemons subject to the configuration and execution potential provided by the underlying `systemd` *Service* management framework, each test run can be executed within an environment according to specific run requirements and/or operator specifications as well as operated in parallel or sequentially based on a defined order. The following variables can be adjusted to manage these execution policies.
 
 `default_run_asynchronous: <true | false>` (**default**: *false*)
 - whether to run configured tests asynchronously and in parallel on a particular host **by default** or execute synchronously waiting for each test to finish prior to starting the next. *Otherwise, defer to run preference.*
