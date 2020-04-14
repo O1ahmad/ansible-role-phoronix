@@ -102,7 +102,7 @@ The following variables can be adjusted to manage these execution policies.
         runtime_config:
           test_results_name: test-compress-results
         unit_properties:
-          # Automatically restart and continue test run on failure
+          # Automatically restart and continue test run on failure - *note*: reuse of `test_results_name` defined above
           Restart: on-failure
           ExecReload: phoronix-test-suite finish-run test-compress-results
           
