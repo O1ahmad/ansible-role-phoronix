@@ -84,6 +84,31 @@ When operating in `autopilot` mode **ONLY**, execution of *PTS* test suites and 
 `default_autopilot: <true | false>` (**default**: *false*)
 - automatically execute a test/benchmarking run, from installation to results reporting, using provided operator configurations **by default**. *Otherwise, defer to run preference.*
 
+`user_configs: <config-entry>: test_runs: <test-entry>: custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
+- hash of settings used to customize the `[Service]` unit configuration and execution environment of the `test run` **systemd** service.
+
+###### Example
+
+ ```yaml
+  user_configs:
+    - user: devops
+      config:
+        BatchMode:
+          SaveResults: true
+      test_runs:
+      - name: pts/compress-gzip
+        runtime_config:
+          test_results_name: test-compress-results
+        unit_properties:
+          # Automatically restart and continue test run on failure
+          Restart: on-failure
+          ExecReload: phoronix-test-suite finish-run test-compress-results
+          
+          # Run helper post execution script to convert test results to json and store in file for upload
+          ExecStopPre: /usr/bin/test_post_exec.sh test-compress-results
+          ExecStopPost: "aws s3 cp /opt/phoronix/test-compress-results.results.json s3://benchmark_results/"
+ ```
+
 #### Uninstall
 
 Support for uninstalling and removing artifacts necessary for provisioning allows for users/operators to return a target host to its configured state prior to application of this role. This can be useful for recycling nodes and roles and perhaps providing more graceful/managed transitions between tooling upgrades.
