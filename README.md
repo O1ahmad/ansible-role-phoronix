@@ -76,7 +76,9 @@ _The following variables can be customized to control various aspects of this in
 
 #### Launch
 
-When operating in `autopilot` mode **ONLY**, execution of *PTS* test suites and individual or groups of tests runs is accomplished using the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool. Launched as background processes or daemons subject to the configuration and execution potential provided by the underlying `systemd` *Service* management framework, each test run can be executed within an environment according to specific run requirements and/or operator specifications as well as operated in parallel or sequentially based on a defined order. The following variables can be adjusted to manage these execution policies.
+When operating in `autopilot` mode **ONLY**, execution of *PTS* test suites and individual or groups of tests runs is accomplished using the [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service management tool. Launched as background processes or daemons subject to the configuration and execution potential provided by the underlying `systemd` *Service* management framework, each test run can be executed within an environment according to specific run requirements and/or operator specifications as well as operated in parallel or sequentially based on a defined order.
+
+The following variables can be adjusted to manage these execution policies.
 
 `default_run_asynchronous: <true | false>` (**default**: *false*)
 - whether to run configured tests asynchronously and in parallel on a particular host **by default** or execute synchronously waiting for each test to finish prior to starting the next. *Otherwise, defer to run preference.*
@@ -84,7 +86,7 @@ When operating in `autopilot` mode **ONLY**, execution of *PTS* test suites and 
 `default_autopilot: <true | false>` (**default**: *false*)
 - automatically execute a test/benchmarking run, from installation to results reporting, using provided operator configurations **by default**. *Otherwise, defer to run preference.*
 
-`[user_configs: <config-entry>: test_runs: <test-entry>:] custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
+`[user_configs: <config-entry>: test_runs: <test-entry>:] custom_unit_properties: <hash>` (**default**: `{}`)
 - hash of settings used to customize the `[Service]` unit configuration and execution environment of the `test run` **systemd** service.
 
 ###### Example
@@ -127,9 +129,9 @@ Example Playbook
 ----------------
 default example:
 ```
-- hosts: all
+- hosts: benchmark-nodes
   roles:
-  - role: 0x0I.<role>
+  - role: 0x0I.phoronix
 ```
 
 License
