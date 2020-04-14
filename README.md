@@ -84,7 +84,7 @@ When operating in `autopilot` mode **ONLY**, execution of *PTS* test suites and 
 `default_autopilot: <true | false>` (**default**: *false*)
 - automatically execute a test/benchmarking run, from installation to results reporting, using provided operator configurations **by default**. *Otherwise, defer to run preference.*
 
-`user_configs: <config-entry>: test_runs: <test-entry>: custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
+`[user_configs: <config-entry>: test_runs: <test-entry>:] custom_unit_properties: <hash-of-systemd-service-settings>` (**default**: `[]`)
 - hash of settings used to customize the `[Service]` unit configuration and execution environment of the `test run` **systemd** service.
 
 ###### Example
