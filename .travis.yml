@@ -11,9 +11,7 @@ env:
   - OS_VERSION=centos-7
   - OS_VERSION=fedora-31
   - OS_VERSION=fedora-32
-  - OS_VERSION=fedora-33
   - OS_VERSION=ubuntu-1804
-  - OS_VERSION=ubuntu-2004
 
 before_script:
   - sudo apt-get install python3-pip python3-setuptools
