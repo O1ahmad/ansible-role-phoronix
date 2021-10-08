@@ -15,3 +15,10 @@
   tags:
     - install
     - archive
+
+- name: Create a symbolic link to user local exec dir
+  become: true
+  ansible.builtin.file:
+    src: "{{ install_dir }}/phoronix-test-suite"
+    dest: "/usr/local/bin/phoronix-test-suite"
+    state: link

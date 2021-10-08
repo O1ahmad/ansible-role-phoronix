@@ -63,6 +63,8 @@
   when: _autopilot
   set_fact:
     _default_test_unit:
+      User: "{{ cfg.user | default(phoronix_user) }}"
+      User: "{{ cfg.group | default(phoronix_user) }}"
       ExecStart: "{{ exe_path }} batch-run {{ test.name }}"
       ExecReload: "{{ exe_path }} finish-run {{ _runtime_config.test_results_name | default(_default_runtime_config.test_results_name) }}"
       EnvironmentFile: "{{ _runtime_dir }}/{{ _test_name }}.env"

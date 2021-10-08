@@ -4,7 +4,7 @@
     _run_recommended_tests: "{{ run_cfg.run_recommended_tests | default(false) }}"
     _run_available_suites: "{{ run_cfg.run_available_suites | default(false) }}"
     _test_runs: "{{ run_cfg.test_runs | default([]) }}"
-    _test_user: "{{ run_cfg.user | default('auto') }}"
+    _test_user: "{{ run_cfg.user | default(phoronix_user) }}"
 
 - name: Batch install recommended tests
   when: _run_recommended_tests
