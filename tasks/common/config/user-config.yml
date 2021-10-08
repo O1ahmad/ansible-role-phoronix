@@ -1,28 +1,15 @@
 ---
 - name: Resolve configuration user based on configuration spec
   set_fact:
-    _cfg_user: "{{ cfg.user | default('auto') | lower }}"
+    _cfg_user: "{{ cfg.user | default(phoronix_user) | lower }}"
     _config_path: "{{ _default_config_path }}"
 
 - name: Resolve configuration directory based on user spec
-  when: _cfg_user != 'auto'
   set_fact:
     _config_path: "/home/{{ _cfg_user }}/.phoronix-test-suite/user-config.xml"
 
-- name: Execute initial batch(autonomous) testing setup
-  become: true
-  when: _cfg_user == 'auto'
-  shell:
-    # auto-deny all options provided by setup (desired config will override)
-    cmd: "yes n | {{ exe_path }} batch-setup"
-    executable: "{{ _shell_exe }}"
-  environment:
-    PTS_SILENT_MODE: 1
-  register: cmd_result
-
 - name: Create user configuration directory
   become: true
-  when: _cfg_user != 'auto'
   file:
     path: "{{ _config_path|dirname }}"
     state: directory
@@ -37,10 +24,10 @@
   template:
     src: "{{ _phoronix_usercfg_file }}.j2"
     dest: "{{ _config_path }}"
-    owner: "{{ phoronix_user }}"
-    group: "{{ phoronix_user }}"
+    owner: "{{ _cfg_user|default(phoronix_user) }}"
+    group: "{{ _cfg_user|default(phoronix_user) }}"
     mode: 0644
   vars:
-    conf: "{{ cfg.config }}"
+    conf: "{{ cfg.config|combine(_autopilot_config) if default_autopilot else cfg.config }}"
   tags:
     - config
