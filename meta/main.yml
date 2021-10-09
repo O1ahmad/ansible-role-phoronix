@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ahmad Wilson
-  role_name: Phoronix
+  role_name: phoronix
   description: phoronix-test-suite, a comprehensive testing and benchmarking platform
   company: "O1.IO"
   license: MIT License
