@@ -1,4 +1,7 @@
 ---
+dependencies:
+  - 0x0i.systemd
+
 galaxy_info:
   author: Ahmad Wilson
   role_name: phoronix
