@@ -3,10 +3,8 @@
 
 Ansible Role :bar_chart: :boom: Phoronix
 =========
-[![Galaxy Role](https://img.shields.io/ansible/role/47439.svg)](https://galaxy.ansible.com/0x0I/phoronix)
+[![Galaxy Role](https://img.shields.io/ansible/role/d/0x0i/phoronix)](https://galaxy.ansible.com/0x0I/phoronix)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/0x0I/ansible-role-phoronix?color=yellow)
-[![Downloads](https://img.shields.io/ansible/role/d/47439.svg?color=lightgrey)](https://galaxy.ansible.com/0x0I/phoronix)
-[![Build Status](https://travis-ci.com/0x0I/ansible-role-phoronix.svg?branch=master)](https://travis-ci.com/0x0I/ansible-role-phoronix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
 
